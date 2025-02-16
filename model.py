@@ -33,7 +33,6 @@ def anonymize(input_audio_path): # <!> DO NOT ADD ANY OTHER ARGUMENTS <!>
     from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
     import soundfile as sf
     import os
-    import random
 
     # device = "cuda:0" if torch.cuda.is_available() else "cpu"
     device = "cpu"
@@ -104,7 +103,7 @@ def anonymize(input_audio_path): # <!> DO NOT ADD ANY OTHER ARGUMENTS <!>
                 generate_kwargs = {
                 #     "max_new_tokens": 448,
                     "language": "english",
-                     "num_beams": 2,
+                    "num_beams": 2,
                 #     "condition_on_prev_tokens": False,
                 #     "compression_ratio_threshold": 1.35,  # zlib compression ratio threshold (in token space)
                 #     "temperature": (0.0, 0.2, 0.4, 0.6, 0.8, 1.0),
@@ -148,8 +147,7 @@ def anonymize(input_audio_path): # <!> DO NOT ADD ANY OTHER ARGUMENTS <!>
         
         # Synthesize anonymized audio using the transcribed text.
         # The split_pattern will separate chunks, but with a single sentence it returns one chunk.
-
-        generator = pipeline_k([original_text], voice="af_heart", speed=1, split_pattern=r'\n+')
+        generator = pipeline_k([original_text], voice='af_heart', speed=1, split_pattern=r'\n+')
         
         # Combine audio chunks if several are returned.
         anonymized_audio = []
